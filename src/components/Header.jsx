@@ -16,7 +16,11 @@ const Header = () => {
         <Link to="/checkout">
           <i className="fas fa-shopping-basket" title="checkout" />
         </Link>
-        {cart.length > 0 && <div className="Header__alert">{cart.length}</div>}
+        {cart.length > 0 && (
+          <div className="Header__alert">
+            {cart.reduce((sum, item) => sum + item.count, 0)}
+          </div>
+        )}
       </div>
     </div>
   );
