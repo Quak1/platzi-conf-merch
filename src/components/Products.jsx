@@ -12,6 +12,8 @@ const Products = () => {
     addToCart(product);
   };
 
+  console.log(state.cart);
+
   return (
     <div className="Products">
       <div className="Products__items">

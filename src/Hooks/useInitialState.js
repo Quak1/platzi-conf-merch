@@ -6,17 +6,49 @@ const useInitialState = () => {
   const [state, setState] = useState(initialState);
 
   const addToCart = (payload) => {
-    setState({
-      ...state,
-      cart: [...state.cart, payload],
-    });
+    const { id } = payload;
+    const { cart } = state;
+
+    if (cart.hasOwnProperty(id)) {
+      setState({
+        ...state,
+        cart: {
+          ...cart,
+          [id]: {
+            ...cart[id],
+            count: cart[id].count + 1,
+          },
+        },
+      });
+    } else {
+      setState({
+        ...state,
+        cart: {
+          ...cart,
+          [id]: { ...payload, count: 1 },
+        },
+      });
+    }
   };
 
   const removeFromCart = (payload) => {
-    setState({
-      ...state,
-      cart: state.cart.filter((items) => items.id !== payload.id),
-    });
+    const { id } = payload;
+    const { cart } = state;
+
+    if (cart[payload.id].count > 1) {
+      setState({
+        ...state,
+        cart: {
+          ...cart,
+          [id]: { ...cart[id], count: cart[id] - 1 },
+        },
+      });
+    } else {
+      setState({
+        ...state,
+        cart: cart.filter((items) => items.id !== payload.id),
+      });
+    }
   };
 
   return {
