@@ -11,7 +11,6 @@ const Products = () => {
   const handleAddToCart = (product) => () => {
     addToCart(product);
   };
-  console.log(state.cart);
 
   return (
     <div className="Products">
