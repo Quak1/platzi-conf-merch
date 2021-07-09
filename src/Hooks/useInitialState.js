@@ -28,7 +28,12 @@ const useInitialState = () => {
   };
 
   const removeFromCart = (payload) => {
-    if (cart[payload.id].count > 1) {
+    const stateId = cart.findIndex((item) => {
+      return item.id === payload.id;
+    });
+
+    if (cart[stateId].count > 1) {
+      console.log('restando');
       const items = [...cart];
 
       const item = { ...cart[stateId] };
