@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import AppContext from '../context/AppContext';
 import '../styles/components/Information.scss';
 
 const Information = () => {
+  const {
+    state: { cart },
+    addBuyer,
+  } = useContext(AppContext);
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    addBuyer(data);
+  };
+
   return (
     <div className="Information">
       <div className="Information__content">
@@ -10,33 +22,52 @@ const Information = () => {
           <h2>Información de contacto:</h2>
         </div>
         <div className="Information__form">
-          <form action="">
-            <input type="text" placeholder="Nombre completo" name="name" />
-            <input type="text" placeholder="Correo Electronico" name="email" />
-            <input type="text" placeholder="Direccion" name="addres" />
-            <input type="text" placeholder="apto" name="apto" />
-            <input type="text" placeholder="Ciudad" name="city" />
-            <input type="text" placeholder="Pais" name="country" />
-            <input type="text" placeholder="Estado" name="state" />
-            <input type="text" placeholder="Codigo postal" name="cp" />
-            <input type="text" placeholder="Telefono" name="phone" />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="name">Nombre completo:</label>
+            <input {...register('name', { required: true })} type="text" />
+
+            <label htmlFor="email">Correo Electronico:</label>
+            <input {...register('email', { required: true })} type="text" />
+
+            <label htmlFor="address">Direccion:</label>
+            <input {...register('addres', { required: true })} type="text" />
+
+            <label htmlFor="city">Ciudad:</label>
+            <input {...register('city', { required: true })} type="text" />
+
+            <label htmlFor="country">Pais:</label>
+            <input {...register('country', { required: true })} type="text" />
+
+            <label htmlFor="state">Estado:</label>
+            <input {...register('state', { required: true })} type="text" />
+
+            <label htmlFor="cp">Codigo Postal:</label>
+            <input {...register('cp', { required: true })} type="number" />
+
+            <label htmlFor="phone">Telefono:</label>
+            <input {...register('phone', { required: true })} type="number" />
+
+            <input type="submit" value="Continuar al pago" />
           </form>
         </div>
         <div className="Information__buttons">
-          <div className="Information__back">Regresar</div>
-          <Link to="/checkout/payment">
-            <div className="Information__next">Pagar</div>
-          </Link>
+          <div className="Information__back">
+            <Link to="/checkout">Regresar</Link>
+          </div>
         </div>
       </div>
       <div className="Information__sidebar">
         <h3>Pedido:</h3>
-        <div className="Information__item">
-          <div className="Information__element">
-            <h4>ITEM NAME</h4>
-            <span>$10</span>
+        {cart.map((item) => (
+          <div className="Information__item" key={item.id}>
+            <div className="Information__element">
+              <h4>
+                {item.title} (${item.price}) x {item.count}
+              </h4>
+              <span>${item.price * item.count}</span>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

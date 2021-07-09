@@ -33,7 +33,6 @@ const useInitialState = () => {
     });
 
     if (cart[stateId].count > 1) {
-      console.log('restando');
       const items = [...cart];
 
       const item = { ...cart[stateId] };
@@ -49,9 +48,17 @@ const useInitialState = () => {
     }
   };
 
+  const addBuyer = (payload) => {
+    setState({
+      ...state,
+      buyer: [...state.buyer, payload],
+    });
+  };
+
   return {
     addToCart,
     removeFromCart,
+    addBuyer,
     state,
   };
 };
