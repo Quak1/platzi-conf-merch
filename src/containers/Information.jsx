@@ -14,7 +14,7 @@ const Information = () => {
   const history = useHistory();
   const onSubmit = (data) => {
     addBuyer(data);
-    history.push('/checkout/payment');
+    history.push('/checkout/success');
   };
 
   return (
