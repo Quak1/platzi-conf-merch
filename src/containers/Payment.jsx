@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
 
 import '../styles/components/Payment.scss';
 
 const Payment = () => {
+  const { state } = useContext(AppContext);
+  console.log(state);
   return (
     <div className="Payment">
       <div className="Payment__content">
